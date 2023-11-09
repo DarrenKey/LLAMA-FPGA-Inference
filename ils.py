@@ -1,7 +1,7 @@
 '''
-Integer Lightweight Softmax implementation using python.
+Unfinished
+Integer Lightweight Softmax implementation using python. Assumes 8-bit quantized input.
 '''
-import math
 import numpy as np
 
 def i_exp(X_q, S, z, n):
@@ -40,18 +40,31 @@ def norm_helper(X_q, S, b):
   
   return X_n, z, n
   
+
+def ils_helper(x, S, z, n):
+  '''
+  Helper function to calculate efficient softmax.
+  x = 1 entry of quantized input
+  S = scale
+  b = bit-width
+  '''
+  total = np.sum(i_exp(X-q))
+  return 2 << np.log2(total) - np.log2(i_exp(x, S, z, n))
+
+
 def ils(X_q, S, b):
   '''
-  Integer Lightweight Softmax function. [Algorithm 1]
+  Integer Lightweight Softmax function. [Algorithm 1 in paper]
   X_q = quantized input
   S = scale
   b = bit-width
   '''
   X_q_temp,z,n = norm_helper(X_q, S, b)
   X_exp,S_iexp = i_exp(X_q_temp,S,z,n)
-  X_out = np.log2(np.sum(i_exp(X_q_temp))) - np.log2(i_exp())
+  result = "FINISH THIS STEP"
+
   
 
   ## ensure ints are 32 bit < 2^31 or clip them
-  ## try plotting function anad compare to regular softmax
+  ## try plotting function and compare to regular softmax
   
